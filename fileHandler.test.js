@@ -23,3 +23,11 @@ describe('fileHandler', () => {
   });
 
  
+  describe('readTasksFromFile', () => {
+    it('should read tasks from file', () => {
+      const tasks = [{ id: 1, title: 'Task 1' }];
+      fs.existsSync.mockReturnValue(true);
+      fs.readFileSync.mockReturnValue(JSON.stringify(tasks));
+      const result = readTasksFromFile();
+      expect(result).toEqual(tasks);
+    });
