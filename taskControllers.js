@@ -38,3 +38,16 @@ exports.createTask = (req, res) => {
             status: fields?.status || 'pending',
             image: image ? `/uploads/${image.originalFilename}` : null,
         }
+        tasks.push(newTask);
+
+        writeTasksToFile(tasks);
+
+        if(image) {
+            copyFileSync(image.filepath, path.join(__dirname, '../uploads', image.originalFilename));
+        }
+
+        res.writeHead(200, { 'content-type': 'application/json'});
+        res.end(JSON.stringify(newTask))
+    })
+}
+
