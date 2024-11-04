@@ -27,3 +27,14 @@ exports.createTask = (req, res) => {
             }))
             return;
         }
+        const image = files.image ? files.image[0] : null;
+
+        const tasks = readTasksFromFile()
+
+        const newTask = {
+            id: Date.now(),
+            title: fields.title,
+            description: fields?.description || '',
+            status: fields?.status || 'pending',
+            image: image ? `/uploads/${image.originalFilename}` : null,
+        }
