@@ -31,3 +31,18 @@ describe('fileHandler', () => {
       const result = readTasksFromFile();
       expect(result).toEqual(tasks);
     });
+    it('should create file if it does not exist', () => {
+      fs.existsSync.mockReturnValue(false);
+      fs.readFileSync.mockReturnValue('[]');
+      const result = readTasksFromFile();
+      expect(fs.writeFileSync).toHaveBeenCalledWith('./data/tasks.json', '[]');
+      expect(result).toEqual([]);
+    });
+    it('should return an empty array when the file is empty', () => {
+      fs.existsSync.mockReturnValue(true);
+      fs.readFileSync.mockReturnValue('[]');
+      const result = readTasksFromFile();
+      expect(result).toEqual([]);
+    });
+  });
+});
